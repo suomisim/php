@@ -3,86 +3,103 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<title>Simon Perusteita</title>
+<title>Lisää henkilö</title>
+<?php
+require_once "checkform.php";  //luokka joka käsittelee lomakkeen
+
+if (isset ( $_POST ["laheta"] )) { //jos nimi on "laheta"
+	
+} 
+elseif (isset ( $_POST ["peruuta"] )) { //jos nimi on "peruuta"
+header ( "location: index.php" );
+exit ();
+} 
+else {	//jos sivulle tultiin muuta kautta
+} 
+?>
 </head>
 <body>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="index.html">Simo Suominen</a>
+                <a class="navbar-brand" href="index.php">Henkilösivu</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="index.html">Home</a></li>
-                <li><a href="Gallery.html">Gallery</a></li>
-                <li><a href="Projects.html">Projects</a></li>
-                <li><a href="Skills.html">Skills</a></li>
+                <li class="active"><a href="form.php">Lisää henkilö</a></li>
+                <li><a href="list.php">Näytä henkilöt</a></li>
+                <li><a href="settings.php">Asetukset</a></li>
             </ul>
         </div>
-    </nav>  
+    </nav> 
 
     <form class="form-horizontal" action="form.php" method="post">
         <fieldset>
             <p><br /></p>
             <div class="form-group">
-                <label class="col-md-4 control-label" for="textinput">First Name</label>
+                <label class="col-md-4 control-label" for="etunimi">Etunimi</label>
                 <div class="col-md-4">
-                    <input id="firstname" name="firstname" placeholder="Enter Your First Name" class="form-control input-md" type="text" maxlength="25">
+                    <input name="etunimi" placeholder="Anna etunimesi:" class="form-control input-md" type="text">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-4 control-label" for="lastname">Last Name</label>
+                <label class="col-md-4 control-label" for="sukunimi">Sukunimi</label>
                 <div class="col-md-4">
-                    <input id="lastname" name="lastname" placeholder="Enter Your Last Name" class="form-control input-md" type="text" maxlength="25">
-
+                    <input name="sukunimi" placeholder="Anna sukunimesi:" class="form-control input-md" type="text">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-4 control label" for="gender"> </label>
+                <label class="col-md-4 control-label" for="lahiosoite">Lähiosoite</label>
                 <div class="col-md-4">
-                    <select id="gender" name="gender" class="form-control">
-                        <option value="" selected="">Gender:</option>
-                        <option value="Female">Female</option>
-                        <option value="Male">Male</option>
-                    </select>
+                    <input name="lahiosoite" placeholder="Anna lähiosoitteesi:" class="form-control input-md" type="text">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-4 control-label" for="company">Age</label>
+                <label class="col-md-4 control-label" for="postinumero">Postinumero</label>
                 <div class="col-md-4">
-                    <input id="age" name="age" placeholder="Enter Your age" class="form-control input-md" type="number">
-
+                    <input name="postinumero" placeholder="Anna postinumerosi:" class="form-control input-md" type="number">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-4 control-label" for="email">E-mail</label>
+                <label class="col-md-4 control-label" for="postitoimipaikka">Postitoimipaikka</label>
                 <div class="col-md-4">
-                    <input id="email" name="email" placeholder="Enter Your Valid email address" class="form-control input-md" type="email" maxlength="50">
-
+                    <input name="postinumero" placeholder="Anna postitoimipaikkasi:" class="form-control input-md" type="text">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-4 control-label" for="website">Website</label>
+                <label class="col-md-4 control-label" for="syntymaaika">Syntymäaika</label>
                 <div class="col-md-4">
-                    <input id="website" name="website" placeholder="Enter Your Website Address" class="form-control input-md" type="url">
-                    <span class="help-block">Ex: www.example.com</span>
+                    <input name="syntymaaika" placeholder="Anna syntymäaikasi" class="form-control input-md" type="text">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-4 control-label" for="Message">Comment</label>
+                <label class="col-md-4 control-label" for="email">Sähköposti</label>
                 <div class="col-md-4">
-                    <textarea class="form-control" id="message" name="message" typeof="url" maxlength="255" required>http://www.example.com</textarea>
+                    <input name="email" placeholder="Anna sähköpostiosoitteesi:" class="form-control input-md" type="email">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="kotisivu">Kotisivusi</label>
+                <div class="col-md-4">
+                    <input name="kotisivu" placeholder="Anna kotisivusi osoite:" class="form-control input-md" type="url">
+                    <span class="help-block">Esim. www.example.com</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="kommentti">Kommentti</label>
+                <div class="col-md-4">
+                    <textarea class="form-control" name="kommentti" type="text"></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-4 control-label" for="laheta"></label>
                 <div class="col-md-4">
-                    <button type="submit" name="laheta" class="btn btn-primary">Submit</button>
+                    <button type="submit" name="laheta" class="btn btn-primary">Lähetä tiedot</button>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-4 control-label" for="peruuta"></label>
                 <div class="col-md-4">
-                    <button type="submit" name="peruuta" class="btn btn-danger">Reset</button>
+                    <button type="submit" name="peruuta" class="btn btn-danger">Palaa etusivulle</button>
                 </div>
             </div>
         </fieldset>
