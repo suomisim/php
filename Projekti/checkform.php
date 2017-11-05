@@ -89,7 +89,7 @@ class Tiedot {
 			return 11;
 		}
 		// Jos nimen muoto ei ole oikea
-		if (! preg_match ( "/^[A-Z]'?[- a-zA-Z]+$/", $this->etunimi )) {
+		if (! preg_match ( "/^[A-ZÅÄÖ]'?[- a-zåäöA-ZÅÄÖ]+$/", $this->etunimi )) {
 			return 12;
 		}
 		// Jos nimi on liian lyhyt
@@ -121,7 +121,7 @@ class Tiedot {
 			return 21;
 		}
 		// Jos nimen muoto ei ole oikea
-		if (! preg_match ( "/^[A-Z]'?[- a-zA-Z]+$/", $this->sukunimi )) {
+		if (! preg_match ( "/^[A-ZÅÄÖ]'?[- a-zåäöA-ZÅÄÖ]+$/", $this->sukunimi )) {
 			return 22;
 		}
 		// Jos nimi on liian lyhyt
