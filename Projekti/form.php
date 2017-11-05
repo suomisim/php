@@ -8,13 +8,33 @@
 require_once "checkform.php";  //luokka joka käsittelee lomakkeen
 
 if (isset ( $_POST ["laheta"] )) { //jos nimi on "laheta"
-	
+	$tiedot = new Tiedot($_POST["etunimi"], $_POST["sukunimi"], $_POST["lahiosoite"], $_POST["postitiedot"], $_POST["syntymaaika"], $_POST["email"], $_POST["kotisivu"], $_POST["kommentti"]);
+    
+    $etunimiVirhe = $tiedot->checkEtunimi();
+    $sukunimiVirhe = $tiedot->checkSukunimi();
+    $lahiosoiteVirhe = $tiedot->checkLahiosoite();
+    $postitiedotVirhe = $tiedot->checkPostitiedot();
+    $syntymaaikaVirhe = $tiedot->checkSyntymaaika();
+    $emailVirhe = $tiedot->checkEmail();
+    $kotisivuVirhe = $tiedot->checkKotisivu();
+    $kommenttiVirhe = $tiedot->checkKommentti();
 } 
 elseif (isset ( $_POST ["peruuta"] )) { //jos nimi on "peruuta"
-header ( "location: index.php" );
-exit ();
+    header ( "location: index.php" );
+    exit ();
 } 
 else {	//jos sivulle tultiin muuta kautta
+    
+    $tiedot = new Tiedot();
+    $etunimiVirhe = 0;
+    $sukunimiVirhe = 0;
+    $lahiosoiteVirhe = 0;
+    $postitiedotVirhe = 0;
+    $syntymaaikaVirhe = 0;
+    $emailVirhe = 0;
+    $kotisivuVirhe = 0;
+    $kommenttiVirhe = 0;
+    
 } 
 ?>
 </head>
@@ -36,68 +56,70 @@ else {	//jos sivulle tultiin muuta kautta
         <fieldset>
             <p><br /></p>
             <div class="form-group">
-                <label class="col-md-4 control-label" for="etunimi">Etunimi</label>
+                <label class="col-md-4 control-label">Etunimi</label>
                 <div class="col-md-4">
-                    <input name="etunimi" placeholder="Anna etunimesi:" class="form-control input-md" type="text">
+                    <input name="etunimi" placeholder="Anna etunimesi:" class="form-control input-md" type="text" value="<?php print(htmlentities ($tiedot->getEtunimi(), ENT_QUOTES, "UTF-8")) ?>">
+                    <div style="color:red;"><?php print($tiedot->getError($etunimiVirhe))?></div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-4 control-label" for="sukunimi">Sukunimi</label>
+                <label class="col-md-4 control-label">Sukunimi</label>
                 <div class="col-md-4">
-                    <input name="sukunimi" placeholder="Anna sukunimesi:" class="form-control input-md" type="text">
+                    <input name="sukunimi" placeholder="Anna sukunimesi:" class="form-control input-md" type="text" value="<?php print(htmlentities ($tiedot->getSukunimi(), ENT_QUOTES, "UTF-8")) ?>">
+                    <div style="color:red;"><?php print($tiedot->getError($sukunimiVirhe))?></div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-4 control-label" for="lahiosoite">Lähiosoite</label>
+                <label class="col-md-4 control-label">Lähiosoite</label>
                 <div class="col-md-4">
-                    <input name="lahiosoite" placeholder="Anna lähiosoitteesi:" class="form-control input-md" type="text">
+                    <input name="lahiosoite" placeholder="Anna lähiosoitteesi:" class="form-control input-md" type="text" value="<?php print(htmlentities ($tiedot->getLahiosoite(), ENT_QUOTES, "UTF-8")) ?>">
+                    <div style="color:red;"><?php print($tiedot->getError($lahiosoiteVirhe))?></div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-4 control-label" for="postinumero">Postinumero</label>
+                <label class="col-md-4 control-label">Postitiedot</label>
                 <div class="col-md-4">
-                    <input name="postinumero" placeholder="Anna postinumerosi:" class="form-control input-md" type="number">
+                    <input name="postitiedot" placeholder="Anna postinumerosi ja postitoimipaikkasi:" class="form-control input-md" type="text" value="<?php print(htmlentities ($tiedot->getPostitiedot(), ENT_QUOTES, "UTF-8")) ?>">
+                    <div style="color:red;"><?php print($tiedot->getError($postitiedotVirhe))?></div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-4 control-label" for="postitoimipaikka">Postitoimipaikka</label>
+                <label class="col-md-4 control-label">Syntymäaika</label>
                 <div class="col-md-4">
-                    <input name="postinumero" placeholder="Anna postitoimipaikkasi:" class="form-control input-md" type="text">
+                    <input name="syntymaaika" placeholder="Anna syntymäaikasi" class="form-control input-md" type="text" value="<?php print(htmlentities ($tiedot->getSyntymaaika(), ENT_QUOTES, "UTF-8")) ?>">
+                    <div style="color:red;"><?php print($tiedot->getError($syntymaaikaVirhe))?></div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-4 control-label" for="syntymaaika">Syntymäaika</label>
+                <label class="col-md-4 control-label">Sähköposti</label>
                 <div class="col-md-4">
-                    <input name="syntymaaika" placeholder="Anna syntymäaikasi" class="form-control input-md" type="text">
+                    <input name="email" placeholder="Anna sähköpostiosoitteesi:" class="form-control input-md" type="text" value="<?php print(htmlentities ($tiedot->getEmail(), ENT_QUOTES, "UTF-8")) ?>">
+                    <div style="color:red;"><?php print($tiedot->getError($emailVirhe))?></div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-4 control-label" for="email">Sähköposti</label>
+                <label class="col-md-4 control-label">Kotisivusi</label>
                 <div class="col-md-4">
-                    <input name="email" placeholder="Anna sähköpostiosoitteesi:" class="form-control input-md" type="email">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="kotisivu">Kotisivusi</label>
-                <div class="col-md-4">
-                    <input name="kotisivu" placeholder="Anna kotisivusi osoite:" class="form-control input-md" type="url">
+                    <input name="kotisivu" placeholder="Anna kotisivusi osoite:" class="form-control input-md" type="text" value="<?php print(htmlentities ($tiedot->getKotisivu(), ENT_QUOTES, "UTF-8")) ?>">
                     <span class="help-block">Esim. www.example.com</span>
+                    <div style="color:red;"><?php print($tiedot->getError($kotisivuVirhe))?></div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-4 control-label" for="kommentti">Kommentti</label>
+                <label class="col-md-4 control-label">Kommentti</label>
                 <div class="col-md-4">
-                    <textarea class="form-control" name="kommentti" type="text"></textarea>
+                    <textarea class="form-control" name="kommentti"><?php print(htmlentities ($tiedot->getKommentti(), ENT_QUOTES, "UTF-8")) ?></textarea>
+                    <div style="color:red;"><?php print($tiedot->getError($kommenttiVirhe))?></div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-4 control-label" for="laheta"></label>
+                <label class="col-md-4 control-label"></label>
                 <div class="col-md-4">
                     <button type="submit" name="laheta" class="btn btn-primary">Lähetä tiedot</button>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-4 control-label" for="peruuta"></label>
+                <label class="col-md-4 control-label"></label>
                 <div class="col-md-4">
                     <button type="submit" name="peruuta" class="btn btn-danger">Palaa etusivulle</button>
                 </div>
