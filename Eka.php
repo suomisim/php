@@ -53,7 +53,11 @@
     </div>
         <div class="well">
         <?php
-
+            $syntymaaika = "01-01-1900";
+            $pp = mb_substr($syntymaaika, 0, 2);
+            $kk = mb_substr($syntymaaika, 3, 2);
+            $vv = mb_substr($syntymaaika, 6, 4);
+            print("$pp $kk $vv");
         ?>
     </div>
 </div>

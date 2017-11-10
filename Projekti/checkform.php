@@ -24,6 +24,7 @@ class Tiedot {
         //Syntymäaika
 			51 => "Syntymäaika ei voi olla tyhjä",
 			52 => "Annathan syntymäajan muodossa pp.kk.vvvv",
+            53 => "Emme voi hyväksyä yli- tai alaikäisiä",
         //Email
 			61 => "Sähköposti ei saa olla tyhjä",
 			62 => "Sähköpostin muoto on väärä",
@@ -68,7 +69,7 @@ class Tiedot {
         $this->email = trim ( $email );
 		$this->kotisivu = trim ( $kotisivu );
 		$this->kommentti = trim ( $kommentti );
-		$this->id = $id;    
+		$this->id = $id;
 	}
 
 	public function setEtunimi($nimi) {
@@ -188,8 +189,12 @@ class Tiedot {
 		return $this->syntymaaika;
 	}
  	public function checkSyntymaaika($required = true) {
-
-		// Jos saa olla tyhjä ja on tyhjä
+        
+        $pp = mb_substr($this->syntymaaika, 0, 2);
+        $kk = mb_substr($this->syntymaaika, 3, 2);
+        $vv = mb_substr($this->syntymaaika, 6, 4);
+   
+        // Jos saa olla tyhjä ja on tyhjä
 		if ($required == false && strlen ( $this->syntymaaika ) == 0) {
 			return 0;
 		}
@@ -200,6 +205,10 @@ class Tiedot {
 		// Jos syntymäajan muoto ei ole oikea
         if (! preg_match ( "/^(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}$/", $this->syntymaaika )) {
             return 52;
+        }
+        $birthDate = mktime( 0, 0, 0, $kk, $pp, $vv );
+        if ( $vv > 2000 || $vv < 1920 ) {
+            return 53;
         }
 		return 0;
 	}
