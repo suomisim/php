@@ -1,28 +1,48 @@
 <?php
 require_once "ilmoitus.php";
 
+session_start(); //luokan lisäämisen jälkeen
+
+
+
 if (isset ( $_POST ["submit"] )) {
     $ilmoitus = new Ilmoitus($_POST["nimi"], $_POST["email"], $_POST["puhnro"], $_POST["paikkakunta"], $_POST["tyyppi"], $_POST["otsikko"], $_POST["kuvaus"], $_POST["hinta"]); //huom järjestys
-    
-   // print_r($ilmoitus); Voi käyttää virheiden selvitykseen
-    
+    $_SESSION["ilmoitus"] = $ilmoitus; //olion lisääminen sessioon nimeltä ilmoitus
+    session_write_close(); //istunnon päättäminen
+    // print_r($ilmoitus); Voi käyttää virheiden selvitykseen
     $nimiVirhe = $ilmoitus->checkNimi();
     $emailVirhe = $ilmoitus->checkEmail();
     $hintaVirhe = $ilmoitus->checkHinta(true, 0.0, 1000.0);
     $puhnroVirhe = $ilmoitus->checkPuhnro();
     $kuvausVirhe = $ilmoitus->checkKuvaus();
+    
+    if ($nimiVirhe == 0 && $emailVirhe == 0 && $hintaVirhe == 0 && $puhnroVirhe == 0 && $kuvausVirhe == 0){
+        header("location: naytaIlmoitus.php");
+        exit();
+    }
+    
+    
 } 
 elseif (isset ( $_POST ["peruuta"] )) {
 	header ( "location: index.php" );
 	exit ();
 } 
 else {
-    $ilmoitus = new Ilmoitus(); //tyhjä olio
-    $nimiVirhe = 0; //virheet nollaksi kun saavutaan sivulle
-    $emailVirhe = 0;
-    $hintaVirhe = 0;
-    $puhnroVirhe = 0;
-    $kuvausVirhe = 0;
+    if (isset($_SESSION["ilmoitus"])) { //jos ilmoitus-sessio on olemassa
+        $ilmoitus = $_SESSION["ilmoitus"]; //sessio ilmoitus -> olio ilmoitus
+        $nimiVirhe = $ilmoitus->checkNimi();
+        $emailVirhe = $ilmoitus->checkEmail();
+        $hintaVirhe = $ilmoitus->checkHinta(true, 0.0, 1000.0);
+        $puhnroVirhe = $ilmoitus->checkPuhnro();
+        $kuvausVirhe = $ilmoitus->checkKuvaus();
+    } else {
+        $ilmoitus = new Ilmoitus(); //tyhjä olio
+        $nimiVirhe = 0; //virheet nollaksi kun saavutaan sivulle
+        $emailVirhe = 0;
+        $hintaVirhe = 0;
+        $puhnroVirhe = 0;
+        $kuvausVirhe = 0;
+    }
 } 
 ?>
 <!DOCTYPE html>

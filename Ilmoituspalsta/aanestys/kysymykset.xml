@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kysymykset>
+	<kysymys id="1">
+		<kysymys>Onko lunta?</kysymys>
+		<kylla>0</kylla>
+		<ei>0</ei>
+		<tykkaaminen>18</tykkaaminen>
+	</kysymys>
+	<kysymys id="2">
+		<kysymys>Onko kylmä?</kysymys>
+		<kylla>0</kylla>
+		<ei>0</ei>
+		<tykkaaminen>9</tykkaaminen>
+	</kysymys>
+	<kysymys id="3">
+		<kysymys>Onko koivuissa lehdet?</kysymys>
+		<kylla>0</kylla>
+		<ei>0</ei>
+		<tykkaaminen>14</tykkaaminen>
+	</kysymys>
+	<kysymys id="4">
+		<kysymys>Voittaaako Bottas formulat?</kysymys>
+		<kylla>0</kylla>
+		<ei>0</ei>
+		<tykkaaminen>6</tykkaaminen>
+	</kysymys>
+	<kysymys id="5">
+		<kysymys>Onko sinulla tarpeeksi lomaa?</kysymys>
+		<kylla>0</kylla>
+		<ei>0</ei>
+		<tykkaaminen>22</tykkaaminen>
+	</kysymys>
+	<kysymys id="6">
+		<kysymys>Oletko vaihtanut talvirenkaat?</kysymys>
+		<kylla>0</kylla>
+		<ei>0</ei>
+		<tykkaaminen>50</tykkaaminen>
+	</kysymys>
+	<kysymys id="7">
+		<kysymys>Uskotko joulupukkiin?</kysymys>
+		<kylla>0</kylla>
+		<ei>0</ei>
+		<tykkaaminen>15</tykkaaminen>
+	</kysymys>
+</kysymykset>
