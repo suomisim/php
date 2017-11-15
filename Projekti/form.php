@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<title>Lisää henkilö</title>
 <?php
 require_once "checkform.php";  //luokka joka käsittelee lomakkeen
 
+session_start();
+
 if (isset ( $_POST ["laheta"] )) { //jos nimi on "laheta"
 	$tiedot = new Tiedot($_POST["etunimi"], $_POST["sukunimi"], $_POST["lahiosoite"], $_POST["postitiedot"], $_POST["syntymaaika"], $_POST["email"], $_POST["kotisivu"], $_POST["kommentti"]);
+    
+    $_SESSION["tiedot"] = $tiedot;
+    session_write_close();
     
     $etunimiVirhe = $tiedot->checkEtunimi();
     $sukunimiVirhe = $tiedot->checkSukunimi();
@@ -18,25 +17,48 @@ if (isset ( $_POST ["laheta"] )) { //jos nimi on "laheta"
     $emailVirhe = $tiedot->checkEmail();
     $kotisivuVirhe = $tiedot->checkKotisivu();
     $kommenttiVirhe = $tiedot->checkKommentti();
+    
+    if ($etunimiVirhe == 0 && $sukunimiVirhe == 0 && $lahiosoiteVirhe == 0 && $postitiedotVirhe == 0 && $syntymaaikaVirhe == 0  && $emailVirhe == 0 && $kotisivuVirhe == 0 && $kommenttiVirhe == 0) {
+        header("location: showform.php");
+        exit();
+    }
+ 
 } 
 elseif (isset ( $_POST ["peruuta"] )) { //jos nimi on "peruuta"
+    unset($_SESSION["tiedot"]);
     header ( "location: index.php" );
     exit ();
 } 
 else {	//jos sivulle tultiin muuta kautta
-    
-    $tiedot = new Tiedot();
-    $etunimiVirhe = 0;
-    $sukunimiVirhe = 0;
-    $lahiosoiteVirhe = 0;
-    $postitiedotVirhe = 0;
-    $syntymaaikaVirhe = 0;
-    $emailVirhe = 0;
-    $kotisivuVirhe = 0;
-    $kommenttiVirhe = 0;
-    
+    if (isset($_SESSION["tiedot"])) {
+        $tiedot = $_SESSION["tiedot"];
+        $etunimiVirhe = $tiedot->checkEtunimi();
+        $sukunimiVirhe = $tiedot->checkSukunimi();
+        $lahiosoiteVirhe = $tiedot->checkLahiosoite();
+        $postitiedotVirhe = $tiedot->checkPostitiedot();
+        $syntymaaikaVirhe = $tiedot->checkSyntymaaika();
+        $emailVirhe = $tiedot->checkEmail();
+        $kotisivuVirhe = $tiedot->checkKotisivu();
+        $kommenttiVirhe = $tiedot->checkKommentti();
+    } else {
+        $tiedot = new Tiedot();
+        $etunimiVirhe = 0;
+        $sukunimiVirhe = 0;
+        $lahiosoiteVirhe = 0;
+        $postitiedotVirhe = 0;
+        $syntymaaikaVirhe = 0;
+        $emailVirhe = 0;
+        $kotisivuVirhe = 0;
+        $kommenttiVirhe = 0;
+    }        
 } 
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<title>Lisää henkilö</title>
 </head>
 <body>
     <nav class="navbar navbar-default">
