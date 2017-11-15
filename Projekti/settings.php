@@ -1,3 +1,14 @@
+<?php
+    session_start();
+    
+    if (isset ( $_POST ["savekayttaja"] )) {
+        $kayttaja = $_POST["kayttaja"];
+        setcookie("kayttaja", $kayttaja, time() + 60*60*24*7); //luodaan keksi ja määritellään sen sisältö ja kestoaika viikko
+        header("location: index.php");
+        exit();
+    }
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,10 +30,19 @@
         </div>
     </nav>  
 
-    <div class="container">
-        <p>Settings</p>
-    </div>
-
+    <form class="form-horizontal" method="post">
+        <fieldset>
+            <p><br /></p>
+            <div class="form-group">
+                <label class="col-md-4 control-label">Käyttäjänimi</label>
+                <div class="col-md-4">
+                    <input name="kayttaja" placeholder="Anna käyttäjänimi:" class="form-control input-md" type="text" value="">
+                    <br />
+                    <button type="submit" name="savekayttaja" class="btn btn-primary">Tallenna</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
 
 
 

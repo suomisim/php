@@ -1,3 +1,10 @@
+<?php
+    if (isset($_COOKIE["kayttaja"])) { //jos keksi löytyy
+        $kayttaja = $_COOKIE["kayttaja"];
+    } else {
+        $kayttaja = "";
+    }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +25,7 @@
             </ul>
         </div>
     </nav>  
-
+    <div class="jumbotron" style="padding-left:10px;"><h3>Tervetuloa <?php print("$kayttaja") ?></h3></div>
     <div class="container">
         <img src="https://img-9gag-fun.9cache.com/photo/a05Yxqz_700b.jpg" />
     </div>
