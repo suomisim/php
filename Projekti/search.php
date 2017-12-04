@@ -1,8 +1,21 @@
+<?php 
+require_once "checkform.php";  //luokka joka käsittelee lomakkeen
+
+session_start();    
+
+    if (isset ( $_POST ["hae"] )) {
+        $_SESSION["sukunimi"] = $_POST["sukunimi"];
+        session_write_close();
+        header("location: search.php");
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <title>Hae henkilöä</title>
 </head>
 <body>
@@ -14,7 +27,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="form.php">Lisää henkilö</a></li>
                 <li><a href="list.php">Näytä henkilöt</a></li>
-                <li class="active"><a href="search.php">Hae henkilöä</a></li>
+                <li class="active"><a href="search.php">Hae henkilöä (Json)</a></li>
                 <li><a href="settings.php">Asetukset</a></li>
             </ul>
         </div>
@@ -33,37 +46,41 @@
             </div>
         </fieldset>
     </form>
+    <div class="well">
+		<div id="lista"></div>
+	</div>
+    <script type="text/javascript"> //skriptit aina bodyn loppuun että muut elementit on ladattu
 
-<?php
-// Jos on hae-niminen painike, tehdään tietojen haku kannasta annetulla kriteerillä
-    if (isset ( $_POST ["hae"] ) && strlen ($_POST ["sukunimi"]) != 0) {
+		$( document ).ready(function() { //testataan onko jquery kirjasto ladattu
+		
+			$.ajax({ //mistä koodi löytyy
+                url: "search-json.php",
+                method: "post", //millä metodilla haetaan
+                dataType: "json" //missä muodossa
+            })
+			.done(function(data) { //jos onnistuu
+                //alert("ok");
+                for (var i = 0; i < data.length; i++) { //käydään objektitaulukko läpi
+                    $("#lista").append("<p><b>Etunimi:</b> " + data[i].etunimi +
+                                       "<br><b>Sukunimi:</b> " + data[i].sukunimi +
+                                       "<br><b>Lähiosoite:</b> " + data[i].lahiosoite +
+                                       "<br><b>Postitiedot:</b> " + data[i].postitiedot +
+                                       "<br><b>Syntymäaika:</b> " + data[i].syntymaaika +
+                                       "<br><b>Sähköposti:</b> " + data[i].email +
+                                       "<br><b>Kotisivu:</b> " + data[i].kotisivu +
+                                       "<br><b>Kommentti:</b> " + data[i].kommentti +
+                                       "</p>")            //viittaa id listaan
+                }
+            })
+			.fail(function(jqXHR, textStatus, message ) {
+ 		         //alert("virhe");
+                $("#lista").append("<p></p>")
+			})
+			
+		})
 
-	   try {
-           require_once "formPDO.php";
-           $kantakasittely = new formPDO();
-           $rivit = $kantakasittely->haeTietty($_POST ["sukunimi"]);
-           if ($kantakasittely->getLkm() == 0) {
-                print("<p>Hakemasi tyyppisiä ilmoituksia ei ole</p>");
-            }
-           print("<div class='well'>");
-           foreach ($rivit as $tieto) {
-                print("<p><b>Etunimi: </b>" . $tieto->getEtunimi());
-                print("<br><b>Sukunimi: </b>" . $tieto->getSukunimi());
-                print("<br><b>Lähiosoite: </b>" . $tieto->getLahiosoite());
-                print("<br><b>Postitiedot: </b>" . $tieto->getPostitiedot());
-                print("<br><b>Syntymäaika: </b>" . $tieto->getSyntymaaika());
-                print("<br><b>Sähköposti: </b>" . $tieto->getEmail());
-                print("<br><b>Kotisivu: </b>" . $tieto->getKotisivu());
-                print("<br><b>Kommentti: </b>" . $tieto->getKommentti() . "<br></p>\n");
-            }
-	       print("</div>");
-	} catch ( Exception $error ) { 
-		print("Virhe: " . $error->getMessage());
-		header ( "location: virhe.php?virhe=" . $error->getMessage () );
-		//exit ();
-	}
-}
-?>
+    </script>
+
 </div>
 
 </body>

@@ -33,7 +33,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="form.php">Lisää henkilö</a></li>
                 <li class="active"><a href="list.php">Näytä henkilöt</a></li>
-                <li><a href="search.php">Hae henkilöä</a></li>
+                <li><a href="search.php">Hae henkilöä  (Json)</a></li>
                 <li><a href="settings.php">Asetukset</a></li>
             </ul>
         </div>
