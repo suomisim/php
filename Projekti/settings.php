@@ -25,6 +25,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="form.php">Lisää henkilö</a></li>
                 <li><a href="list.php">Näytä henkilöt</a></li>
+                <li><a href="search.php">Hae henkilöä</a></li>
                 <li class="active"><a href="settings.php">Asetukset</a></li>
             </ul>
         </div>

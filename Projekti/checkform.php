@@ -72,7 +72,7 @@ class Tiedot {
 		$this->id = $id;
 	}
 
-	public function setEtunimi($nimi) {
+	public function setEtunimi($etunimi) {
 		$this->etunimi = trim ( $etunimi );
 	}
 
@@ -104,7 +104,7 @@ class Tiedot {
 		// Kentässä ei ole virhettä
 		return 0;
 	}
-    public function setSukunimi($nimi) {
+    public function setSukunimi($sukunimi) {
 		$this->sukunimi = trim ( $sukunimi );
 	}
 

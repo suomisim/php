@@ -23,7 +23,19 @@
         exit();
     }
     if (isset ( $_POST ["talleta"] )) {
-        unset($_SESSION["tiedot"]);
+        try {
+            require_once "formPDO.php";
+            
+            $kantakasittely = new formPDO();
+            $id = $kantakasittely->lisaaTiedot($tiedot);
+            $tiedot->setId($id);
+            unset($_SESSION["tiedot"]);       
+            
+        } catch (Exception $error) {
+            print("Virhe " . $error->getMessage());
+            exit();
+        }
+        
         header("location: showform-success.php");
         exit();
     }

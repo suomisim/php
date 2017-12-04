@@ -24,6 +24,7 @@ if (isset ( $_POST ["laheta"] )) { //jos nimi on "laheta"
     }
  
 } 
+//tästä alas toimii
 elseif (isset ( $_POST ["peruuta"] )) { //jos nimi on "peruuta"
     unset($_SESSION["tiedot"]);
     header ( "location: index.php" );
@@ -69,6 +70,7 @@ else {	//jos sivulle tultiin muuta kautta
             <ul class="nav navbar-nav">
                 <li class="active"><a href="form.php">Lisää henkilö</a></li>
                 <li><a href="list.php">Näytä henkilöt</a></li>
+                <li><a href="search.php">Hae henkilöä</a></li>
                 <li><a href="settings.php">Asetukset</a></li>
             </ul>
         </div>
