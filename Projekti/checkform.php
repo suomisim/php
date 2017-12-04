@@ -1,5 +1,5 @@
 <?php
-class Tiedot {
+class Tiedot implements JsonSerializable {
 	// Virhekoodeja vastaavat virheilmoitukset
 	private static $virhelista = array (
 			- 1 => "Tuntematon virhe",
@@ -36,6 +36,19 @@ class Tiedot {
 			82 => "Kommentissa on kiellettyjä merkkejä",
             83 => "Kommentin on oltava 8-100 merkkiä pitkä"
 	);
+    public function jsonSerialize() {
+        return array (
+            "etunimi" => $this->etunimi,
+            "sukunimi" => $this->sukunimi,
+            "lahiosoite" => $this->lahiosoite,
+            "postitiedot" => $this->postitiedot,
+            "syntymaaika" => $this->syntymaaika,
+            "email" => $this->email,
+            "kotisivu" => $this->kotisivu,
+            "kommentti" => $this->kommentti,
+            "id" => $this->id
+        );
+    }
 
 	// Kertoo virhekoodia vastaavan virhetekstin
 	public static function getError($virhekoodi) {

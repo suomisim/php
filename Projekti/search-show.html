@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"> 
+<title>Henkilön tiedot</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<body>
+	<h1>Henkilön tiedot</h1>
+
+	<div class="container container-well">
+		<div id="lista"></div>
+	</div>
+
+
+	<script type="text/javascript"> //skriptit aina bodyn loppuun että muut elementit on ladattu
+
+		$( document ).ready(function() { //testataan onko jquery kirjasto ladattu
+		
+			$.ajax({ //mistä koodi löytyy
+                url: "search-json.php",
+                method: "get", //millä metodilla haetaan
+                dataType: "json" //missä muodossa
+            })
+			.done(function(data) { //jos onnistuu
+                //alert("ok");
+                for (var i = 0; i < data.length; i++) { //käydään objektitaulukko läpi
+                    $("#lista").append("<p>Etunimi: " + data[i].etunimi +
+                                       "<br>Sukunimi: " + data[i].sukunimi +
+                                       "<br>Kommentti: " + data[i].kommentti +
+                                       "</p>")            //viittaa id listaan
+                }
+            })
+			.fail(function(jqXHR, textStatus, message ) {
+ 		         //alert("virhe");
+                $("#lista").append("<p>Tietoja ei saatu haettua</p>")
+			})
+			
+		})
+
+    </script>
+</body>
+</html>
