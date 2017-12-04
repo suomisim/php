@@ -255,7 +255,7 @@ class Tiedot {
 		return 0;
 	}
     public function setKommentti($kommentti) {
-		$this->kuvaus = trim ( $kommentti );
+		$this->kommentti = trim ( $kommentti );
 	}
 	public function getKommentti() {
 		return $this->kommentti;

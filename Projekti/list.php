@@ -78,7 +78,7 @@
             $riviid = $tieto->getId();
             print("<form action='' method='post'><input type='hidden' name='id' value='$riviid'>");
             print("<p><b>Etunimi: </b>" . $tieto->getEtunimi());
-            print("<br><b>Sukunimi: </b>" . $tieto->getSukunimi() . "<br></p>\n");
+            print("<br><b>Sukunimi: </b>" . $tieto->getKommentti() . "<br></p>\n");
             print("<div class='btn-group'><button type='submit' name='nayta' value='$riviid' class='btn btn-info'>Näytä</button><button type='submit' name='poista' class='btn btn-danger'>Poista</button></div>");
             print("<hr>");
             print("</form>");

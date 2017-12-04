@@ -42,7 +42,7 @@ class formPDO {
 		}
 		
 		// Käsittellään hakulausekkeen tulos
-		$tulos = array ();
+		$tiedot = array ();
 		
 		// Pyydetään haun tuloksista kukin rivi kerrallaan
 		while ( $row = $stmt->fetchObject () ) {
@@ -58,11 +58,9 @@ class formPDO {
 			$tiedot->setEmail ( utf8_encode ( $row->email ) );
 			$tiedot->setKotisivu ( utf8_encode ( $row->kotisivu ) );
 			$tiedot->setKommentti ( utf8_encode ( $row->kommentti ) );
-			
 			// Laitetaan olio tulos taulukkoon (olio-taulukkoon)
 			$tulos [] = $tiedot;
 		} 
-		
 		$this->lkm = $stmt->rowCount ();
 		
 		return $tulos;
