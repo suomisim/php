@@ -1,4 +1,6 @@
 <?php
+    require_once "checkform.php";
+    session_start();
     if (isset ( $_POST ["poista"] )) {
         try {
             require_once "formPDO.php";
@@ -37,34 +39,32 @@
         </div>
     </nav>
 <?php
+   
 // Jos on nayta-niminen painike, tehdään tietojen haku kannasta annetulla kriteerillä
     if (isset ( $_POST ["nayta"] )) {
 
-	   try {
-           require_once "formPDO.php";
-           $kantakasittely = new formPDO();
-           $rivit = $kantakasittely->haeId($_POST ["nayta"]);
-           if ($kantakasittely->getLkm() == 0) {
-                print("<p>Hakemasi tyyppisiä ilmoituksia ei ole</p>");
-            }
-           print("<div class='well'>");
-           foreach ($rivit as $tieto) {
-                print("<p><b>Etunimi: </b>" . $tieto->getEtunimi());
-                print("<br><b>Sukunimi: </b>" . $tieto->getSukunimi());
-                print("<br><b>Lähiosoite: </b>" . $tieto->getLahiosoite());
-                print("<br><b>Postitiedot: </b>" . $tieto->getPostitiedot());
-                print("<br><b>Syntymäaika: </b>" . $tieto->getSyntymaaika());
-                print("<br><b>Sähköposti: </b>" . $tieto->getEmail());
-                print("<br><b>Kotisivu: </b>" . $tieto->getKotisivu());
-                print("<br><b>Kommentti: </b>" . $tieto->getKommentti() . "<br></p>\n");
-            }         
-	       print("</div>");
-	} catch ( Exception $error ) { 
-		print("Virhe: " . $error->getMessage());
-		//header ( "location: virhe.php?virhe=" . $error->getMessage () );
-		//exit ();
-	}
-}
+
+        require_once "formPDO.php";
+        $kantakasittely = new formPDO();
+        $rivit = $kantakasittely->haeId($_POST ["nayta"]);
+        foreach ($rivit as $tieto) {
+            $etunimi = $tieto->getEtunimi();
+            $sukunimi = $tieto->getSukunimi();
+            $lahiosoite = $tieto->getLahiosoite();
+            $postitiedot = $tieto->getPostitiedot();
+            $syntymaaika = $tieto->getSyntymaaika();
+            $email = $tieto->getEmail();
+            $kotisivu = $tieto->getKotisivu();
+            $kommentti = $tieto->getKommentti();
+            $tiedot = new Tiedot($etunimi, $sukunimi, $lahiosoite, $postitiedot, $syntymaaika, $email, $kotisivu, $kommentti);
+            $_SESSION["henkilo"] = $tiedot;
+            session_write_close();
+            header("location: list-show.php");
+            exit();
+        }
+
+
+    }
 ?>
 
 <div class="well">
@@ -78,7 +78,7 @@
             $riviid = $tieto->getId();
             print("<form action='' method='post'><input type='hidden' name='id' value='$riviid'>");
             print("<p><b>Etunimi: </b>" . $tieto->getEtunimi());
-            print("<br><b>Sukunimi: </b>" . $tieto->getKommentti() . "<br></p>\n");
+            print("<br><b>Sukunimi: </b>" . $tieto->getSukunimi() . "<br></p>\n");
             print("<div class='btn-group'><button type='submit' name='nayta' value='$riviid' class='btn btn-info'>Näytä</button><button type='submit' name='poista' class='btn btn-danger'>Poista</button></div>");
             print("<hr>");
             print("</form>");
