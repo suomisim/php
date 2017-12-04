@@ -1,10 +1,17 @@
 <?php 
-require_once "checkform.php";  //luokka joka käsittelee lomakkeen
-
-session_start();    
 
     if (isset ( $_POST ["hae"] )) {
+        require_once "checkform.php";  //luokka joka käsittelee lomakkeen
+        session_start();
         $_SESSION["sukunimi"] = $_POST["sukunimi"];
+        session_write_close();
+        header("location: search.php");
+        exit();
+    }
+    if (isset ( $_POST ["tyhjenna"] )) {
+        require_once "checkform.php";  //luokka joka käsittelee lomakkeen
+        session_start();
+        $_SESSION["sukunimi"] = "";
         session_write_close();
         header("location: search.php");
         exit();
@@ -41,7 +48,10 @@ session_start();
                 <div class="col-md-4">
                     <input name="sukunimi" placeholder="Anna sukunimi" class="form-control input-md" type="text" value="">
                     <br />
-                    <button type="submit" name="hae" class="btn btn-primary">Hae</button>
+                    <div class="btn-group">
+                        <button type="submit" name="hae" class="btn btn-info">Hae</button>
+                        <button type="submit" name="tyhjenna" class="btn btn-danger">Tyhjennä</button>
+                    </div>
                 </div>
             </div>
         </fieldset>
