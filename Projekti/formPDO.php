@@ -5,7 +5,7 @@ class formPDO {
 	private $db;
 	private $lkm;
 	
-	function __construct($dsn = "mysql:host=localhost;dbname=henkilot", $user = "root", $password = "salainen") {
+	function __construct($dsn = "mysql:host=localhost;dbname=a1501104", $user = "root", $password = "salainen") {
 		// Ota yhteys kantaan
 		$this->db = new PDO ( $dsn, $user, $password );
 		

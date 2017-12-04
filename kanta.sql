@@ -28,9 +28,9 @@ CREATE TABLE `ilmoitus` (
   `nimi` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `puhnro` varchar(20) DEFAULT NULL,
-  `paikkakunta` varchar(50) NOT NULL
+  `paikkakunta` varchar(50) NOT NULL,
   PRIMARY KEY(id))
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `ilmoitus` (`tyyppi`, `otsikko`, `kuvaus`, `hinta`, `nimi`, `email`, `puhnro`, `paikkakunta`) VALUES
 (1, 'Purjevene', 'Vähän käytetty', '1000.00', 'Sirpa Marttila', 'sirpa.marttila@haaga-helia.fi', '1234567', 'Lohja'),
